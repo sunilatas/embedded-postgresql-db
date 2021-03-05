@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: "embedded-db"
+
+server:
+  port: "8003"
