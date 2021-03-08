@@ -10,8 +10,7 @@ import javax.sql.DataSource;
 public class EmbeddedDBConfig {
 
     @Bean
-    public DataSource inMemoryDS() throws Exception {
-        DataSource embeddedPostgresDS = EmbeddedPostgres.builder().start().getPostgresDatabase();
-        return embeddedPostgresDS;
+    public PGSimpleDataSource inMemoryDS() throws Exception {
+        return (PGSimpleDataSource) EmbeddedPostgres.builder().start().getPostgresDatabase();
     }
 }
