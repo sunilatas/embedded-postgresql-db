@@ -8,17 +8,29 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 @Service
-public class MigrateSql {
+public class DBMigrationService {
 
     @Autowired
-    private DataSource dataSource;
+    private PGSimpleDataSource inMemoryDataSource;
+
+    @Value("${spring.flyway.dbMigrationPath}")
+    private String dbMigrationPath;
 
     @PostConstruct
     public void migrateWithFlyway() {
         Flyway flyway = Flyway.configure()
-                .dataSource(dataSource)
-                .locations("db/migration")
+                .dataSource(inMemoryDataSource)
+                .locations(dbMigrationPath)
                 .load();
         flyway.migrate();
+        
+        log.info("************************************************");
+        log.info("URL : {}", inMemoryDataSource.getURL());
+        log.info("SERVER : {}", inMemoryDataSource.getServerNames()[0]);
+        log.info("PORT : {}", inMemoryDataSource.getPortNumbers()[0]);
+        log.info("DB NAME : {}", inMemoryDataSource.getDatabaseName());
+        log.info("USER : {}", inMemoryDataSource.getUser());
+        log.info("PASSWORD : {}", inMemoryDataSource.getPassword());
+        log.info("************************************************");
     }
 }
