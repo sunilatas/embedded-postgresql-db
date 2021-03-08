@@ -1,6 +1,17 @@
 spring:
   application:
-    name: "embedded-db"
+    name: embedded-db
+    description: embedded-db for development purpose.
+  flyway:
+    enabled: true
+    dbMigrationPath: "/db/migration"
 
-server:
-  port: "8003"
+logging:
+  level:
+    root: INFO
+
+spring.banner:
+  location: "classpath:banner/banner.txt"
+  image:
+    location: "classpath:banner/postgreSql.png"
+
